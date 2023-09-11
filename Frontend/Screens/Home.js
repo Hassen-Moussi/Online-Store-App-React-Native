@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Picker, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { Picker } from 'react-native-web';
+import { useNavigation } from '@react-navigation/native'; 
 
 const items = [
   { id: '1', name: 'Item 1', price: '$10.99', image: require('../assets/images/OIF.jpg'), category: 'Category A' },
@@ -9,16 +11,23 @@ const items = [
 ];
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] = useState('All'); // Default category is "All"
+  const [selectedCategory, setSelectedCategory] = useState('All'); 
   const [searchText, setSearchText] = useState('');
+  const navigation = useNavigation(); 
+  const navigateToItemDetail = (item) => {
+    navigation.navigate('ItemDetail', { item });
+  };
 
   const renderItem = ({ item }) => (
     (selectedCategory === 'All' || selectedCategory === item.category) && (
-      <View style={styles.item}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => navigateToItemDetail(item)}
+      >
         <Image source={item.image} style={styles.itemImage} />
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.itemPrice}>{item.price}</Text>
-      </View>
+      </TouchableOpacity>
     )
   );
 
@@ -45,9 +54,11 @@ function Home() {
             value={searchText}
           />
         </View>
-        <View style={styles.headerRight}>
-          {/* Add your cart icon here */}
-          <Image source={require('../assets/images/cart.jpg')} style={styles.cartIcon} />
+        <View style={styles.headerRight} >
+        
+          <TouchableOpacity onPress={() => navigation.navigate('CartScreen')} > <Image source={require('../assets/images/cart.jpg')} style={styles.cartIcon} /> </TouchableOpacity>
+          
+          <Text> 10 DNT </Text>
         </View>
       </View>
       <FlatList
@@ -67,6 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   header: {
+    color: "black",
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,

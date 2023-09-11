@@ -1,64 +1,144 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-
-const Profile = () => {
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+const App = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.profileHeader}>
-        <Image
-          source={require('../assets/images/profile.jpg')} // Replace with your profile picture image
-          style={styles.profileImage}
-        />
-        <Text style={styles.profileName}>Hassen</Text>
-      </View>
-      <View style={styles.profileInfo}>
-        <Text style={styles.infoTitle}>About Me</Text>
-        <Text style={styles.infoText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non
-          mi sed augue feugiat cursus.
-        </Text>
-        <Text style={styles.infoTitle}>Contact Information</Text>
-        <Text style={styles.infoText}>Email: hassen.moussi@example.com</Text>
-        <Text style={styles.infoText}>Phone: (216) 12345678</Text>
+    <View style={{flex: 1}}>
+      <StatusBar barStyle={'light-content'} backgroundColor="#212121" />
+      <ImageBackground
+        source={{
+          uri: 'https://images.unsplash.com/photo-1507281736509-c6289f1ea0f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+        }}
+        style={{flex: 0.5}}
+        resizeMode={'cover'}>
+        <View style={{flex: 0.5}}></View>
+      </ImageBackground>
+      <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 100 / 2,
+              borderWidth: 3,
+              borderColor: '#FFFFFF',
+              position: 'absolute',
+              zIndex: 2,
+            }}
+          />
+        </View>
+        <View style={{marginTop: 60}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 18,
+              textAlign: 'center',
+              color: '#212121',
+            }}>
+            Hassen Moussi
+          </Text>
+          <Text style={{textAlign: 'center'}}>
+            10 DNT 
+          </Text>
+          <View style={{marginLeft: 80}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20,
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 40,
+                  height: 40,
+                }}>
+                <Icon name="mobile-alt" size={25} color="#212121" />
+              </View>
+              <View style={{justifyContent: 'center', marginLeft: 10, flex: 1}}>
+                <Text style={{fontWeight: 'bold'}}>+216-12345678</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 40,
+                  height: 40,
+                }}>
+                <Icon name="map-marker-alt" size={25} color="#212121" />
+              </View>
+              <View style={{justifyContent: 'center', marginLeft: 10, flex: 1}}>
+                <Text style={{fontWeight: 'bold'}}>Beja</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 40,
+                  height: 40,
+                }}>
+                <Icon name="envelope" size={25} color="#212121" />
+              </View>
+              <View style={{justifyContent: 'center', marginLeft: 10, flex: 1}}>
+                <Text style={{fontWeight: 'bold'}}>
+                  hassen.tn.moussi@gmail.com
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{flexDirection: 'row', marginTop: 40, marginHorizontal: 30}}>
+            <TouchableOpacity
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Icon name="facebook" size={25} color="#bdbdbd" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Icon name="instagram" size={25} color="#bdbdbd" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Icon name="github" size={25} color="#bdbdbd" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Icon name="twitter" size={25} color="#bdbdbd" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Icon name="linkedin" size={25} color="#bdbdbd" />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  profileHeader: {
-    alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75, // Half of width/height to make it a circle
-    resizeMode: 'cover',
-  },
-  profileName: {
-    marginTop: 12,
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  profileInfo: {
-    padding: 16,
-  },
-  infoTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  infoText: {
-    fontSize: 16,
-    marginBottom: 12,
-  },
-});
-
-export default Profile;
+export default App;
