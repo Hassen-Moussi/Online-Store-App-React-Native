@@ -8,7 +8,21 @@ import {
   ImageBackground,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-const App = () => {
+import { useNavigation } from '@react-navigation/native';
+import COLORS from '../consts/colors';
+
+
+
+const Profile = () => {
+
+
+  const navigation = useNavigation(); 
+
+  const handleLogout = () => {
+   
+    navigation.navigate('login'); 
+  };
+
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle={'light-content'} backgroundColor="#212121" />
@@ -137,8 +151,21 @@ const App = () => {
           </View>
         </View>
       </View>
+      <TouchableOpacity
+        style={{
+          alignSelf: 'center',
+          marginTop: 20,
+          backgroundColor: COLORS.green,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          borderRadius: 10,
+        }}
+        onPress={handleLogout}
+      >
+        <Text style={{ color: COLORS.dark, fontSize: 18 }}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default App;
+export default Profile;

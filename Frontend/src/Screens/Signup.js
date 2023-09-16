@@ -14,6 +14,7 @@ import {
   import { AntDesign } from "@expo/vector-icons";
   import { Ionicons } from "@expo/vector-icons";
   import { useNavigation } from "@react-navigation/native";
+import COLORS from "../consts/colors";
   
   const RegisterScreen = () => {
     const [email, setEmail] = useState("");
@@ -27,25 +28,7 @@ import {
         password: password,
       };
   
-      axios
-        .post("http://localhost:8000/register", user)
-        .then((response) => {
-          console.log(response);
-          Alert.alert(
-            "Registration successful",
-            "You have been registered Successfully"
-          );
-          setName("");
-          setEmail("");
-          setPassword("");
-        })
-        .catch((error) => {
-          Alert.alert(
-            "Registration Error",
-            "An error occurred while registering"
-          );
-          console.log("registration failed", error);
-        });
+     
     };
     return (
       <SafeAreaView
@@ -192,7 +175,7 @@ import {
             onPress={handleRegister}
             style={{
               width: 200,
-              backgroundColor: "#FEBE10",
+              backgroundColor: COLORS.green,
               borderRadius: 6,
               marginLeft: "auto",
               marginRight: "auto",
@@ -212,7 +195,7 @@ import {
           </Pressable>
   
           <Pressable
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('login')}
             style={{ marginTop: 15 }}
           >
             <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>

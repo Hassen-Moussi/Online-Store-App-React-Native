@@ -4,12 +4,15 @@ import {
   View,
   Pressable,
   TextInput,
+  SafeAreaView,
+  Image
 
 } from "react-native";
 import React, { useState } from "react";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import COLORS from "../consts/colors";
 
 
   function Login ({ navigation }) {
@@ -22,7 +25,7 @@ import { Ionicons } from "@expo/vector-icons";
     
       if (username === 'hassen' && password === '0000') {
         alert(`Logged in as ${username}`);
-        navigation.navigate('ShopOnline');
+        navigation.navigate('Home');
       } else {
         alert('Please enter both username and password.');
       }
@@ -30,7 +33,17 @@ import { Ionicons } from "@expo/vector-icons";
     
 
     return (
-      
+      <SafeAreaView
+      style={{ flex: 1, backgroundColor: "white", alignItems: "center",marginTop:50  }}
+    >
+      <View>
+          <Image
+            style={{ width: 150, height: 100 }}
+            source={{
+              uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png",
+            }}
+          />
+        </View>
       
       <View style={styles.container}>
       
@@ -128,7 +141,7 @@ import { Ionicons } from "@expo/vector-icons";
             onPress={handleLogin}
             style={{
               width: 200,
-              backgroundColor: "#FEBE10",
+              backgroundColor: COLORS.green,
               borderRadius: 6,
               marginLeft: "auto",
               marginRight: "auto",
@@ -156,6 +169,7 @@ import { Ionicons } from "@expo/vector-icons";
             </Text>
           </Pressable>
       </View>
+      </SafeAreaView>
     );
   };
 
