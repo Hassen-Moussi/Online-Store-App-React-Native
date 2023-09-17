@@ -1,28 +1,35 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  StatusBar,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StatusBar, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/native';
 import COLORS from '../consts/colors';
-
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getUserById } from "../Services/ApiService";
+const userId = await AsyncStorage.getItem('id');
 const Profile = () => {
-
-
-  const navigation = useNavigation(); 
+  const [user, setUser] = useState(null);
+  const navigation = useNavigation();
+ 
 
   const handleLogout = () => {
-   
-    navigation.navigate('login'); 
+    navigation.navigate('login');
   };
 
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const userData = await getUserById(userId);
+
+        if (userData) {
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+
+    fetchUserData();
+  }, [userId]);
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle={'light-content'} backgroundColor="#212121" />
@@ -52,6 +59,7 @@ const Profile = () => {
           />
         </View>
         <View style={{marginTop: 60}}>
+        {user && (
           <Text
             style={{
               fontWeight: 'bold',
@@ -59,11 +67,10 @@ const Profile = () => {
               textAlign: 'center',
               color: '#212121',
             }}>
-            Hassen Moussi
+           {user.Username}
           </Text>
-          <Text style={{textAlign: 'center'}}>
-            10 DNT 
-          </Text>
+        )}
+      
           <View style={{marginLeft: 80}}>
             <View
               style={{
@@ -120,9 +127,11 @@ const Profile = () => {
                 <Icon name="envelope" size={25} color="#212121" />
               </View>
               <View style={{justifyContent: 'center', marginLeft: 10, flex: 1}}>
+              {user &&(
                 <Text style={{fontWeight: 'bold'}}>
-                  hassen.tn.moussi@gmail.com
+                  {user.Email}
                 </Text>
+              )}
               </View>
             </View>
           </View>

@@ -9,13 +9,14 @@ import {
 
 } from "react-native";
 import React, { useState } from "react";
-
+import {Login} from "../Services/ApiService";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../consts/colors";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-  function Login ({ navigation }) {
+  function LoginPage ({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -23,13 +24,29 @@ import COLORS from "../consts/colors";
       console.log('username:', username);
       console.log('password:', password);
     
-      if (username === 'hassen' && password === '0000') {
-        alert(`Logged in as ${username}`);
-        navigation.navigate('Home');
+      if (username && password) {
+        try {
+          const response = await Login(username, password);
+    
+          if (response && response.success) {
+            alert('Login Successful');
+            console.log(response.data.data.id)
+            await AsyncStorage.setItem('id',response.data.data.id);
+            navigation.navigate('Home');
+          } else {
+            alert(response.message || 'Login failed');
+          }
+        } catch (error) {
+          alert('An error occurred during login.');
+          console.error('Error during login:', error);
+        }
       } else {
         alert('Please enter both username and password.');
       }
     };
+    
+    
+    
     
 
     return (
@@ -194,4 +211,4 @@ import COLORS from "../consts/colors";
     },
   });
 
-  export default Login;
+  export default LoginPage;

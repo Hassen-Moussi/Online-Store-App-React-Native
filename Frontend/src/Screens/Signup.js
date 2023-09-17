@@ -1,35 +1,53 @@
+import React, { useState, useEffect } from "react";
 import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    Pressable,
-    Image,
-    KeyboardAvoidingView,
-    TextInput,
-    Alert,
-  } from "react-native";
-  import React, { useState } from "react";
-  import { MaterialIcons } from "@expo/vector-icons";
-  import { AntDesign } from "@expo/vector-icons";
-  import { Ionicons } from "@expo/vector-icons";
-  import { useNavigation } from "@react-navigation/native";
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Pressable,
+  Image,
+  KeyboardAvoidingView,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import COLORS from "../consts/colors";
-  
-  const RegisterScreen = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const navigation = useNavigation();
-    const handleRegister = () => {
-      const user = {
-        name: name,
-        email: email,
-        password: password,
-      };
-  
-     
-    };
+import {createUser,} from "../Services/ApiService";
+
+
+const RegisterScreen = () => {
+  const [Email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [Username, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigation = useNavigation();
+
+  const handleRegister = async () => {
+    if (!Username || !Email || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError("");
+
+      const newUser = await createUser(Username, Email, password);
+      console.log("User registered:", newUser);
+
+   
+    } catch (error) {
+      setError("Registration failed. Please try again.");
+      console.error("Error registering user:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
     return (
       <SafeAreaView
         style={{ flex: 1, backgroundColor: "white", alignItems: "center",marginTop:50  }}
@@ -76,13 +94,13 @@ import COLORS from "../consts/colors";
                 style={{ marginLeft: 8 }}
               />
               <TextInput
-                value={name}
+                value={Username}
                 onChangeText={(text) => setName(text)}
                 style={{
                   color: "gray",
                   marginVertical: 10,
                   width: 300,
-                  fontSize: name ? 16 : 16,
+                  fontSize: Username ? 16 : 16,
                 }}
                 placeholder="enter your name"
               />
@@ -107,7 +125,7 @@ import COLORS from "../consts/colors";
               />
   
               <TextInput
-                value={email}
+                value={Email}
                 onChangeText={(text) => setEmail(text)}
                 style={{
                   color: "gray",
@@ -147,7 +165,7 @@ import COLORS from "../consts/colors";
                   color: "gray",
                   marginVertical: 10,
                   width: 300,
-                  fontSize: email ? 16 : 16,
+                  fontSize: Email ? 16 : 16,
                 }}
                 placeholder="enter your Password"
               />
@@ -182,7 +200,7 @@ import COLORS from "../consts/colors";
               padding: 15,
             }}
           >
-            <Text
+          <Text
               style={{
                 textAlign: "center",
                 color: "white",
